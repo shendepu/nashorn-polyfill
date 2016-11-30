@@ -9,8 +9,10 @@
   "scripts": {
     "clean": "rimraf build",
     "build:polyfill": "node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.dev.js",
+    "build:polyfill:prod": "node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.prod.js",
     "build:server-polyfill": "node node_modules/gulp/bin/gulp.js scripts",
-    "build:dev": "npm run clean && npm run build:server-polyfill && npm run build:polyfill"
+    "build:dev": "npm run clean && npm run build:server-polyfill && npm run build:polyfill",
+    "build:prod": "npm run clean && npm run build:server-polyfill && npm run build:polyfill:prod"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
