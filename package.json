@@ -1,0 +1,21 @@
+{
+  "name": "nashorn-polyfill",
+  "version": "0.0.1",
+  "description": "Polyfill for Nashorn Script Engine",
+  "main": "index.js",
+  "repository": "https://github.com/shendepu/nashorn-polyfill.git",
+  "author": "Jimmy Shen <shendepu@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf build",
+    "build:dev": "npm run clean && node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.dev.js"
+  },
+  "devDependencies": {
+    "rimraf": "^2.5.4"
+  },
+  "dependencies": {
+    "core-js": "^2.4.1",
+    "url-search-params": "^0.6.1",
+    "webpack": "2.1.0-beta.25"
+  }
+}

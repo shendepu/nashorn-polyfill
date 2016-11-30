@@ -1,0 +1,12 @@
+.DS_STORE
+*.log
+
+node_modules
+
+dist
+dist_ssr
+coverage
+
+.env
+
+.idea/
