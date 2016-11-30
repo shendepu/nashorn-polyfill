@@ -11,6 +11,8 @@
     "build:dev": "npm run clean && node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.dev.js"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
     "rimraf": "^2.5.4"
   },
   "dependencies": {
