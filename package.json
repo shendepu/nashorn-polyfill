@@ -7,17 +7,14 @@
   "author": "Jimmy Shen <shendepu@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf build",
-    "build:polyfill": "node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.dev.js",
-    "build:polyfill:prod": "node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.prod.js",
-    "build:server-polyfill": "node node_modules/gulp/bin/gulp.js scripts",
-    "build:dev": "npm run clean && npm run build:server-polyfill && npm run build:polyfill",
-    "build:prod": "npm run clean && npm run build:server-polyfill && npm run build:polyfill:prod"
+    "build:dev": "node node_modules/gulp/bin/gulp.js scripts",
+    "build:prod": "node node_modules/gulp/bin/gulp.js scripts:prod"
   },
   "devDependencies": {
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
-    "rimraf": "^2.5.4"
+    "gulp-util": "^3.0.7"
   },
   "dependencies": {
     "core-js": "^2.4.1",

@@ -15,7 +15,7 @@ const webpackConfig = {
   entry: paths.base('index.js'),
   output: {
     path: paths.build(),
-    filename: 'nashorn-polyfill.js'
+    filename: 'nashorn-polyfill.webpack.js'
   },
   module : {}
 }
