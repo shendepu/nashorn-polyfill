@@ -8,7 +8,9 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf build",
-    "build:dev": "npm run clean && node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.dev.js"
+    "build:polyfill": "node node_modules/webpack/bin/webpack.js --config ./config/webpack.config.dev.js",
+    "build:server-polyfill": "node node_modules/gulp/bin/gulp.js scripts",
+    "build:dev": "npm run clean && npm run build:server-polyfill && npm run build:polyfill"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
