@@ -9,7 +9,9 @@
   "scripts": {
     "build:dev": "node node_modules/gulp/bin/gulp.js scripts",
     "build:prod": "node node_modules/gulp/bin/gulp.js scripts:prod",
-    "dist": "node node_modules/gulp/bin/gulp.js scripts:dist"
+    "dist": "node node_modules/gulp/bin/gulp.js scripts:dist",
+    "test:setTimeout": "jjs -scripting lib/global-polyfill.js lib/timer-polyfill.js test/setTimeout.js",
+    "test": "npm run test:setTimeout"
   },
   "devDependencies": {
     "del": "^2.2.2",
