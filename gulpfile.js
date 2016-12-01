@@ -55,7 +55,7 @@ function addGlobalPolyfillArg(cmd) {
   return cmd + ' ' + paths.lib('global-polyfill.js')
 }
 function addTimerPolyfillArg(cmd) {
-  return cmd + ' ' + paths.lib('timer-polyfill.js')
+  return addGlobalPolyfillArg(cmd) + ' ' + paths.lib('timer-polyfill.js')
 }
 function addXmlHttpRequestPolyfillArg(cmd) {
   return cmd + ' ' + paths.lib('xml-http-request-polyfill.js')
@@ -64,16 +64,30 @@ function addBlobPolyfillArg(cmd) {
   return cmd + ' ' + paths.lib('blob-polyfill.js')
 }
 
+var jjsCmd = '/usr/bin/jjs -scripting ';
+
+function execCallback(callback) {
+  return function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    callback(err);
+  }
+}
+
 gulp.task('test:setTimeout', function (callback) {
-  var cmd = '/usr/bin/jjs -scripting ';
-  cmd = addGlobalPolyfillArg(cmd);
+  var cmd = jjsCmd;
   cmd = addTimerPolyfillArg(cmd);
-  return gulp.src('test/setTimeout.js')
-    .pipe(exec(cmd + ' <%= file.path %>', function (err, stdout, stderr) {
-      console.log(stdout);
-      console.log(stderr);
-      callback(err);
-    }));
+  return gulp.src('test/timer/setTimeout.js')
+    .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
 });
 
-gulp.task('test', ['test:setTimeout']);
+gulp.task('test:clearTimeout', function (callback) {
+  var cmd = jjsCmd;
+  cmd = addTimerPolyfillArg(cmd);
+  return gulp.src('test/timer/clearTimeout.js')
+    .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
+});
+
+gulp.task('test:timers', ['test:setTimeout', 'test:clearTimeout'])
+
+gulp.task('test', ['test:timers']);
