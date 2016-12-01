@@ -964,6 +964,14 @@ gulp-concat@^2.6.1:
     through2 "^2.0.0"
     vinyl "^2.0.0"
 
+gulp-exec@^2.1.3:
+  version "2.1.3"
+  resolved "http://registry.npm.taobao.org/gulp-exec/download/gulp-exec-2.1.3.tgz#460a4ec8df86841d1738bc74958c68e5769342d9"
+  dependencies:
+    gulp-util "^3.0.7"
+    gulplog "^1.0.0"
+    through2 "^2.0.1"
+
 gulp-util@^3.0.0, gulp-util@^3.0.7:
   version "3.0.7"
   resolved "http://registry.npm.taobao.org/gulp-util/download/gulp-util-3.0.7.tgz#78925c4b8f8b49005ac01a011c557e6218941cbb"
