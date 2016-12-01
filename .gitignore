@@ -3,10 +3,6 @@
 
 node_modules
 
-dist
-dist_ssr
-coverage
-
-.env
-
 .idea/
+
+build/
