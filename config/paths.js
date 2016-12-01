@@ -8,5 +8,6 @@ function base () {
 module.exports = {
   base: base,
   lib: base.bind(null, 'lib'),
-  build: base.bind(null, 'build')
+  build: base.bind(null, 'build'),
+  dist: base.bind(null, 'dist')
 }
