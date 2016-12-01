@@ -88,6 +88,20 @@ gulp.task('test:clearTimeout', function (callback) {
     .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
 });
 
-gulp.task('test:timers', ['test:setTimeout', 'test:clearTimeout'])
+gulp.task('test:setInterval', function (callback) {
+  var cmd = jjsCmd;
+  cmd = addTimerPolyfillArg(cmd);
+  return gulp.src('test/timer/setInterval.js')
+    .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
+});
+
+gulp.task('test:clearInterval', function (callback) {
+  var cmd = jjsCmd;
+  cmd = addTimerPolyfillArg(cmd);
+  return gulp.src('test/timer/clearInterval.js')
+    .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
+});
+
+gulp.task('test:timers', ['test:setTimeout', 'test:clearTimeout', 'test:setInterval', 'test:clearInterval'])
 
 gulp.task('test', ['test:timers']);

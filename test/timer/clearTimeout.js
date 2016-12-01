@@ -2,13 +2,14 @@
   function test(name) {
     return function () { print(name); }
   }
-
-  var timerId = setTimeout(test('setTimeout 500ms'), 500);
+  var timerId = setTimeout(test('setTimeout 500ms'), 3000);
   print('clearTimeout clears timerId ' + timerId);
   clearTimeout(timerId)
 
   setTimeout(function() {
     context.__nashorn_polyfill_timer.cancel();
-    print('The process is terminated by hacking way of __nashorn_polyfill_timer.cancel().');
-  }, 2 * 1000)
+    if (context.__nashorn_polyfill_timerMap.size() !== 1) {
+      throw new Error('timer is not cleaned.')
+    }
+  }, 1 * 1000)
 })(this);
