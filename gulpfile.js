@@ -52,7 +52,8 @@ gulp.task('scripts:dist', ['clean:dist', 'scripts:prod'], function () {
 });
 
 function addGlobalPolyfillArg(cmd) {
-  return cmd + ' -scripting ' + paths.lib('global-polyfill.js')
+  return cmd + ' -scripting ' + paths.lib('global-polyfill.js') + ' ' +
+    paths.test('util', 'it.js');
 }
 function addTimerPolyfillArg(cmd) {
   return addGlobalPolyfillArg(cmd) + ' ' + paths.lib('timer-polyfill.js')
@@ -65,7 +66,8 @@ function addXmlHttpRequestPolyfillArg(cmd) {
   var command = command + ':' + paths.test('lib', 'commons-logging-1.2.jar');
 
   command = addGlobalPolyfillArg(command);
-//   command = command + ' ' + paths.lib('timer-polyfill');
+  command = command + ' ' + paths.lib('timer-polyfill.js');
+  command = command + ' ' + paths.test('util', 'es6-promise-polyfill.js');
   command = command + ' ' + paths.test('util', 'fetch.js');
   return command + ' ' + paths.lib('xml-http-request-polyfill.js')
 }
@@ -78,7 +80,7 @@ var jjsCmd = '/usr/bin/jjs';
 function execCallback(callback) {
   return function(err, stdout, stderr) {
     console.log(stdout);
-    console.log(stderr);
+    console.error(stderr);
     callback(err);
   }
 }
@@ -107,14 +109,22 @@ gulp.task('test:clearInterval', function (callback) {
     .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
 });
 
-gulp.task('test:xhr:getUrl', function (callback) {
+function testXmlHttpRequest(file, callback) {
   var cmd = addXmlHttpRequestPolyfillArg(jjsCmd);
-  return gulp.src('test/xhr/getUrl.js')
+  return gulp.src(file)
     .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
+}
+
+gulp.task('test:xhr:getUrl', function (callback) {
+  return testXmlHttpRequest('test/xhr/getUrl.js', callback);
 });
 
-gulp.task('test:timers', ['test:setTimeout', 'test:clearTimeout', 'test:setInterval', 'test:clearInterval'])
+gulp.task('test:xhr:postUrl', function (callback) {
+  return testXmlHttpRequest('test/xhr/postUrl.js', callback);
+});
 
-gulp.task('test:xhr', ['test:xhr:getUrl'])
+gulp.task('test:timers', ['test:setTimeout', 'test:clearTimeout', 'test:setInterval', 'test:clearInterval']);
+
+gulp.task('test:xhr', ['test:xhr:getUrl', 'test:xhr:postUrl']);
 
 gulp.task('test', ['test:timers', 'test:xhr']);
