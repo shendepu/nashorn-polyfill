@@ -52,19 +52,28 @@ gulp.task('scripts:dist', ['clean:dist', 'scripts:prod'], function () {
 });
 
 function addGlobalPolyfillArg(cmd) {
-  return cmd + ' ' + paths.lib('global-polyfill.js')
+  return cmd + ' -scripting ' + paths.lib('global-polyfill.js')
 }
 function addTimerPolyfillArg(cmd) {
   return addGlobalPolyfillArg(cmd) + ' ' + paths.lib('timer-polyfill.js')
 }
 function addXmlHttpRequestPolyfillArg(cmd) {
-  return cmd + ' ' + paths.lib('xml-http-request-polyfill.js')
+  var command = cmd + ' -classpath ' + paths.test('lib', 'httpcore-4.4.5.jar');
+  var command = command + ':' + paths.test('lib', 'httpclient-4.5.2.jar');
+  var command = command + ':' + paths.test('lib', 'httpcore-nio-4.4.5.jar');
+  var command = command + ':' + paths.test('lib', 'httpasyncclient-4.1.2.jar');
+  var command = command + ':' + paths.test('lib', 'commons-logging-1.2.jar');
+
+  command = addGlobalPolyfillArg(command);
+//   command = command + ' ' + paths.lib('timer-polyfill');
+  command = command + ' ' + paths.test('util', 'fetch.js');
+  return command + ' ' + paths.lib('xml-http-request-polyfill.js')
 }
 function addBlobPolyfillArg(cmd) {
-  return cmd + ' ' + paths.lib('blob-polyfill.js')
+  return addGlobalPolyfillArg(cmd) + ' ' + paths.lib('blob-polyfill.js')
 }
 
-var jjsCmd = '/usr/bin/jjs -scripting ';
+var jjsCmd = '/usr/bin/jjs';
 
 function execCallback(callback) {
   return function(err, stdout, stderr) {
@@ -75,33 +84,37 @@ function execCallback(callback) {
 }
 
 gulp.task('test:setTimeout', function (callback) {
-  var cmd = jjsCmd;
-  cmd = addTimerPolyfillArg(cmd);
+  var cmd = addTimerPolyfillArg(jjsCmd);
   return gulp.src('test/timer/setTimeout.js')
     .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
 });
 
 gulp.task('test:clearTimeout', function (callback) {
-  var cmd = jjsCmd;
-  cmd = addTimerPolyfillArg(cmd);
+  var cmd = addTimerPolyfillArg(jjsCmd);
   return gulp.src('test/timer/clearTimeout.js')
     .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
 });
 
 gulp.task('test:setInterval', function (callback) {
-  var cmd = jjsCmd;
-  cmd = addTimerPolyfillArg(cmd);
+  var cmd = addTimerPolyfillArg(jjsCmd);
   return gulp.src('test/timer/setInterval.js')
     .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
 });
 
 gulp.task('test:clearInterval', function (callback) {
-  var cmd = jjsCmd;
-  cmd = addTimerPolyfillArg(cmd);
+  var cmd = addTimerPolyfillArg(jjsCmd);
   return gulp.src('test/timer/clearInterval.js')
+    .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
+});
+
+gulp.task('test:xhr:getUrl', function (callback) {
+  var cmd = addXmlHttpRequestPolyfillArg(jjsCmd);
+  return gulp.src('test/xhr/getUrl.js')
     .pipe(exec(cmd + ' <%= file.path %>', execCallback(callback)));
 });
 
 gulp.task('test:timers', ['test:setTimeout', 'test:clearTimeout', 'test:setInterval', 'test:clearInterval'])
 
-gulp.task('test', ['test:timers']);
+gulp.task('test:xhr', ['test:xhr:getUrl'])
+
+gulp.task('test', ['test:timers', 'test:xhr']);

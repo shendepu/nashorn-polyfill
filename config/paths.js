@@ -9,5 +9,6 @@ module.exports = {
   base: base,
   lib: base.bind(null, 'lib'),
   build: base.bind(null, 'build'),
+  test: base.bind(null, 'test'),
   dist: base.bind(null, 'dist')
 }
