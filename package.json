@@ -9,7 +9,7 @@
   "scripts": {
     "build:dev": "node node_modules/gulp/bin/gulp.js scripts",
     "build:prod": "node node_modules/gulp/bin/gulp.js scripts:prod",
-    "dist": "npm test && node node_modules/gulp/bin/gulp.js scripts:dist",
+    "dist": "node node_modules/gulp/bin/gulp.js scripts:dist",
     "test": "node node_modules/gulp/bin/gulp.js test"
   },
   "devDependencies": {
