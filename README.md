@@ -60,7 +60,8 @@ When runs on server with Promise, remember to call `nashornEventLoop.process()` 
 
 # Link
 
-### [Moqui React SSR Demo](https://github.com/shendepu/moqui-react-ssr-demo): 
+### [Product Demo](https://demo.moshian.com): This is demo of a product with react, react-router, apollo (GraphQL client)
+### [Moqui React SSR Demo](https://github.com/shendepu/moqui-react-ssr-demo):
 
 This demo shows how react app is rendered on server side. The code playing with Nashorn Script Engine sits in [Moqui React SSR](https://github.com/shendepu/moqui-react-ssr) which is easy to extract to be used in any Java application.
 
