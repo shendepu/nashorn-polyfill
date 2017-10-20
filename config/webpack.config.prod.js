@@ -22,14 +22,16 @@ const webpackConfig = {
 }
 
 webpackConfig.plugins.push(
-  new webpack.optimize.OccurrenceOrderPlugin(),
-  new webpack.optimize.DedupePlugin(),
+  // Copy from create-react-app
   new webpack.optimize.UglifyJsPlugin({
-    compress : {
-      unused    : true,
-      dead_code : true,
-      warnings  : false
-    }
+    compress: {
+      warnings: false,
+      comparisons: false,
+    },
+    output: {
+      comments: false,
+    },
+    sourceMap: true
   })
 )
 
